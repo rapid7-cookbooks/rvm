@@ -16,6 +16,9 @@ class Chef
         include Chef::RVM::ShellHelpers
       end
 
+      # TODO: Configure this?
+      DEFAULT_SHELL_OUT_ENV = {'LC_ALL' => 'en_US.UTF-8'}
+
       def self.fetch_version(user = nil)
         @@versions ||= Hash.new
         rvm_install = user || "system"
@@ -27,10 +30,10 @@ class Chef
 
         if user
           user_dir    = Etc.getpwnam(user).dir
-          environment = { 'USER' => user, 'HOME' => user_dir }
+          environment = DEFAULT_SHELL_OUT_ENV.merge({ 'USER' => user, 'HOME' => user_dir })
         else
           user_dir    = nil
-          environment = nil
+          environment = DEFAULT_SHELL_OUT_ENV.dup
         end
 
         version = shell_out!(

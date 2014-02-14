@@ -35,6 +35,9 @@ class Chef
         include Chef::RVM::ShellHelpers
         include Chef::RVM::SetHelpers
 
+        # TODO: Configure this?
+        DEFAULT_SHELL_OUT_ENV = {'LC_ALL' => 'en_US.UTF-8'}
+
         class RVMGemEnvironment < AlternateGemEnvironment
           include Chef::RVM::ShellHelpers
           include Chef::RVM::SetHelpers
@@ -53,10 +56,10 @@ class Chef
 
             if user
               user_dir    = Etc.getpwnam(user).dir
-              environment = { 'USER' => user, 'HOME' => user_dir }
+              environment = DEFAULT_SHELL_OUT_ENV.merge({ 'USER' => user, 'HOME' => user_dir })
             else
               user_dir    = nil
-              environment = nil
+              environment = DEFAULT_SHELL_OUT_ENV.dup
             end
 
             # shellout! is a fork/exec which won't work on windows
@@ -73,10 +76,10 @@ class Chef
 
             if user
               user_dir    = Etc.getpwnam(user).dir
-              environment = { 'USER' => user, 'HOME' => user_dir }
+              environment = DEFAULT_SHELL_OUT_ENV.merge({ 'USER' => user, 'HOME' => user_dir })
             else
               user_dir    = nil
-              environment = nil
+              environment = DEFAULT_SHELL_OUT_ENV.dup
             end
 
             gem_environment = shell_out!(
@@ -152,10 +155,10 @@ class Chef
 
           if gem_env.user
             user_dir    = Etc.getpwnam(gem_env.user).dir
-            environment = { 'USER' => gem_env.user, 'HOME' => user_dir }
+            environment = DEFAULT_SHELL_OUT_ENV.merge({ 'USER' => gem_env.user, 'HOME' => user_dir })
           else
             user_dir    = nil
-            environment = nil
+            environment = DEFAULT_SHELL_OUT_ENV.dup
           end
 
           shell_out!(rvm_wrap_cmd(cmd, user_dir), :env => environment)
@@ -176,10 +179,10 @@ class Chef
 
           if gem_env.user
             user_dir    = Etc.getpwnam(gem_env.user).dir
-            environment = { 'USER' => gem_env.user, 'HOME' => user_dir }
+            environment = DEFAULT_SHELL_OUT_ENV.merge({ 'USER' => gem_env.user, 'HOME' => user_dir })
           else
             user_dir    = nil
-            environment = nil
+            environment = DEFAULT_SHELL_OUT_ENV.dup
           end
 
           shell_out!(rvm_wrap_cmd(cmd, user_dir), :env => environment)

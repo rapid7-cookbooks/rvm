@@ -45,8 +45,9 @@ private
 # @param [Symbol] action to be performed with gem_package provider
 # @param [optional, String, #to_s] the fully qualifed rvm string
 def gem_package_wrapper(exec_action, ruby_global_gemset)
-  g = rvm_gem new_resource.package_name do
+  g = rvm_gem "#{ruby_global_gemset}: #{new_resource.package_name}" do
     ruby_string ruby_global_gemset
+    package_name new_resource.package_name
     source      new_resource.source if new_resource.source
     options     new_resource.options if new_resource.options
     version     new_resource.version if new_resource.version

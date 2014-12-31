@@ -34,6 +34,13 @@ Array(node['rvm']['user_installs']).each do |rvm_user|
   rvm_gem_options   = rvm_user['rvm_gem_options'] || node['rvm']['rvm_gem_options']
   rvmrc             = rvm_user['rvmrc'] || node['rvm']['rvmrc']
 
+  execute "RVM gpg key for #{rvm_user['user']}" do
+    command "`which gpg2 || which gpg` --homedir #{rvm_prefix}/.gnupg --keyserver hkp://keys.gnupg.net --recv-keys #{node['rvm']['gpg_key']}"
+    user rvm_user['user']
+    only_if { node['rvm']['gpg_key'] }
+    not_if "`which gpg2 || which gpg` --homedir #{rvm_prefix}/.gnupg --list-keys #{node['rvm']['gpg_key']}", :user => rvm_user['user']
+  end
+
   rvmrc_template  :rvm_prefix => rvm_prefix,
                   :rvm_gem_options => rvm_gem_options,
                   :rvmrc => rvmrc,

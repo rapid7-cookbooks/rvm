@@ -39,6 +39,12 @@ if node['rvm']['group_id'] != 'default'
   g.run_action(:create)
 end
 
+execute 'RVM gpg key for system' do
+  command "`which gpg2 || which gpg` --keyserver hkp://keys.gnupg.net --recv-keys #{node['rvm']['gpg_key']}"
+  only_if { node['rvm']['gpg_key'] }
+  not_if "`which gpg2 || which gpg` --list-keys #{node['rvm']['gpg_key']}"
+end
+
 rvmrc_template  :rvm_prefix => rvm_prefix,
                 :rvm_gem_options => rvm_gem_options,
                 :rvmrc => rvmrc,

@@ -59,6 +59,9 @@ default['rvm']['root_path']     = "/usr/local/rvm"
 default['rvm']['group_id']      = 'default'
 default['rvm']['group_users']   = []
 
+# GPG key for rvm verification
+default['rvm']['gpg_key']       = 'D39DC0E3'
+
 # default rvm_gem_options (skip rdoc/ri generation)
 default['rvm']['rvm_gem_options'] = "--no-rdoc --no-ri"
 
@@ -71,7 +74,7 @@ when "redhat","centos","fedora","scientific","amazon"
   node.set['rvm']['install_pkgs']   = %w{sed grep tar gzip bzip2 bash curl git}
   default['rvm']['user_home_root']  = '/home'
 when "debian","ubuntu","suse"
-  node.set['rvm']['install_pkgs']   = %w{sed grep tar gzip bzip2 bash curl git-core}
+  node.set['rvm']['install_pkgs']   = %w{sed grep tar gzip bzip2 bash curl git-core gnupg}
   default['rvm']['user_home_root']  = '/home'
 when "gentoo"
   node.set['rvm']['install_pkgs']   = %w{git}

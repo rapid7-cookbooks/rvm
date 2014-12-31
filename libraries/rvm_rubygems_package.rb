@@ -127,14 +127,16 @@ class Chef
 
         def install_package(name, version)
           # ensure each ruby is installed and gemset exists
-          ruby_strings.each do |rubie|
-            next if rubie == 'system'
-            e = rvm_environment rubie do
-              user    gem_env.user if gem_env.user
-              action :nothing
-            end
-            e.run_action(:create)
-          end
+          # BEWARE: Calling a resource from this class is not supported.
+          # Commenting this out - users will need to ensure the current ruby exists.
+          #ruby_strings.each do |rubie|
+          #  next if rubie == 'system'
+          #  e = rvm_environment rubie do
+          #    user    gem_env.user if gem_env.user
+          #    action :nothing
+          #  end
+          #  e.run_action(:create)
+          #end
 
           install_via_gem_command(name, version)
           true

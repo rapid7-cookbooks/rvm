@@ -163,7 +163,7 @@ class Chef
             environment = DEFAULT_SHELL_OUT_ENV.dup
           end
 
-          shell_out!(rvm_wrap_cmd(cmd, user_dir), :env => environment)
+          shell_out!(rvm_wrap_cmd(cmd, user_dir), :env => environment, :timeout => 1800)
         end
 
         def remove_package(name, version)

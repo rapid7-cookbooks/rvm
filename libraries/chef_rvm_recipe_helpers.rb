@@ -179,15 +179,18 @@ class Chef
           if rubie.is_a?(Hash)
             ruby = rubie.fetch("version")
             ruby_patch = rubie.fetch("patch", nil)
+            ruby_configure = rubie.fetch("configure", nil)
             ruby_rubygems_version = rubie.fetch("rubygems_version", nil)
           else
             ruby = rubie
             ruby_patch = nil
             ruby_rubygems_version = nil
+            ruby_configure = nil
           end
 
           rvm_ruby ruby do
             patch            ruby_patch
+            configure        ruby_configure
             user             opts[:user]
             rubygems_version ruby_rubygems_version
           end

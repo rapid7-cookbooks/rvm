@@ -189,10 +189,10 @@ class Chef
           end
 
           rvm_ruby ruby do
-            patch            ruby_patch
-            configure        ruby_configure
+            patch            ruby_patch if ruby_patch
+            configure        ruby_configure if ruby_configure
             user             opts[:user]
-            rubygems_version ruby_rubygems_version
+            rubygems_version ruby_rubygems_version if ruby_rubygems_version
           end
         end
 

@@ -233,7 +233,7 @@ class Chef
 
       def mac_with_no_homebrew
         %w{ mac_os_x mac_os_x_server }.include?(node['platform']) &&
-          Chef::Resource.resource_for_node(:service, node) !=
+          Chef::Resource.resource_for_node(:package, node) !=
           Chef::Provider::Package::Homebrew
       end
     end

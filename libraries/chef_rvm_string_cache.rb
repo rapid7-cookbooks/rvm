@@ -68,9 +68,10 @@ class Chef
         cmd = ["source #{find_profile_to_source(user_dir)}",
           "rvm_ruby_string='#{str}'", "__rvm_ruby_string",
           "echo $rvm_ruby_string"].join(" && ")
-        pid, stdin, stdout, stderr = popen4('bash', shell_params(user, user_dir))
-        stdin.puts(cmd)
-        stdin.close
+        #pid, stdin, stdout, stderr = popen('bash', shell_params(user, user_dir))
+        stdout, status = Open3.capture2(cmd)
+        #stdin.puts(cmd)
+        #stdin.close
 
         result = stdout.read.split('\n').first.chomp
         if result =~ /^-/   # if the result has a leading dash, value is bogus

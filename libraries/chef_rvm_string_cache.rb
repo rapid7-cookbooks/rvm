@@ -19,6 +19,7 @@
 # limitations under the License.
 #
 
+
 class Chef
   module RVM
     module ShellHelpers

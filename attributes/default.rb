@@ -71,15 +71,15 @@ default['rvm']['user_install_rubies'] = "true"
 
 case platform
 when "redhat","centos","fedora","scientific","amazon"
-  node.set['rvm']['install_pkgs']   = %w{sed grep tar gzip bzip2 bash curl git}
+  node.normal['rvm']['install_pkgs']   = %w{sed grep tar gzip bzip2 bash curl git}
   default['rvm']['user_home_root']  = '/home'
 when "debian","ubuntu","suse"
-  node.set['rvm']['install_pkgs']   = %w{sed grep tar gzip bzip2 bash curl git-core gnupg}
+  node.normal['rvm']['install_pkgs']   = %w{sed grep tar gzip bzip2 bash curl git-core gnupg}
   default['rvm']['user_home_root']  = '/home'
 when "gentoo"
-  node.set['rvm']['install_pkgs']   = %w{git}
+  node.normal['rvm']['install_pkgs']   = %w{git}
   default['rvm']['user_home_root']  = '/home'
 when "mac_os_x", "mac_os_x_server"
-  node.set['rvm']['install_pkgs']   = %w{git}
+  node.normal['rvm']['install_pkgs']   = %w{git}
   default['rvm']['user_home_root']  = '/Users'
 end

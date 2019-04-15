@@ -64,7 +64,8 @@ def create_rvm_shell_chef_wrapper
       if no_current
         Chef::Log.debug("RVM::Shell::ChefWrapper subprocess executing with " +
           "environment of: [#{shell_params.inspect}].")
-        @current = popen4(self.shell_executable, shell_params)
+        #@current = popen4(self.shell_executable, shell_params)
+        @current = Open3.popen3(self.shell_executable, shell_params)
         invoke_setup!
       end
       yield
@@ -73,9 +74,9 @@ def create_rvm_shell_chef_wrapper
     end
 
     # Direct access to each of the named descriptors
-    def stdin;  @current[1]; end
-    def stdout; @current[2]; end
-    def stderr; @current[3]; end
+    def stdin;  @current[0]; end
+    def stdout; @current[1]; end
+    def stderr; @current[2]; end
 
     def shell_params
       if @user.nil?

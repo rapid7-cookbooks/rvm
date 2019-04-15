@@ -129,14 +129,13 @@ class Chef
           # ensure each ruby is installed and gemset exists
           # BEWARE: Calling a resource from this class is not supported.
           # Commenting this out - users will need to ensure the current ruby exists.
-          #ruby_strings.each do |rubie|
-          #  next if rubie == 'system'
-          #  e = rvm_environment rubie do
-          #    user    gem_env.user if gem_env.user
-          #    action :nothing
-          #  end
-          #  e.run_action(:create)
-          #end
+          ruby_strings.each do |rubie|
+            next if rubie == 'system'
+            e = ::Chef::Resource::RvmEnvironment.new(rubie, @run_context)
+            e.user(gem_env.user) if gem_env.user
+            e.action(:nothing)
+            e.run_action(:create)
+          end
 
           install_via_gem_command(name, version)
           true

@@ -74,7 +74,7 @@ when "redhat","centos","fedora","scientific","amazon"
   node.normal['rvm']['install_pkgs']   = %w{sed grep tar gzip bzip2 bash curl git}
   default['rvm']['user_home_root']  = '/home'
 when "debian","ubuntu","suse"
-  node.normal['rvm']['install_pkgs']   = %w{sed grep tar gzip bzip2 bash curl git-core gnupg}
+  node.normal['rvm']['install_pkgs']   = %w{sed grep tar gzip bzip2 bash curl git gnupg}
   default['rvm']['user_home_root']  = '/home'
 when "gentoo"
   node.normal['rvm']['install_pkgs']   = %w{git}

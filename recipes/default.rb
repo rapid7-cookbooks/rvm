@@ -21,7 +21,7 @@
 gem_package 'rvm' do
   action :install
   version '>= 1.11.3.6'
-  compile_time true if Chef::Resource::ChefGem.instance_methods(false).include?(:compile_time)
+  #compile_time true if Chef::Resource::ChefGem.instance_methods(false).include?(:compile_time)
 end
 require 'rvm'
 

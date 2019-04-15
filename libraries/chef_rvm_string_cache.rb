@@ -69,7 +69,7 @@ class Chef
           "rvm_ruby_string='#{str}'", "__rvm_ruby_string",
           "echo $rvm_ruby_string"].join(" && ")
         #pid, stdin, stdout, stderr = popen4('bash', shell_params(user, user_dir))
-
+        result = ""
         Open3.popen2('bash', shell_params(user, user_dir)) do |stdin, stdout, status_thread|
           stdin.puts(cmd)
           stdin.close

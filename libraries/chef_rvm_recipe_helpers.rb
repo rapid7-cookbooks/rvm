@@ -229,6 +229,10 @@ class Chef
         end
       end
 
+      def include_default_source(value)
+          puts value
+      end
+
       private
 
       def mac_with_no_homebrew

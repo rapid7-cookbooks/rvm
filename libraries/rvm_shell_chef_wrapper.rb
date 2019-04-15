@@ -20,10 +20,8 @@
 #
 
 def create_rvm_shell_chef_wrapper
-  require 'chef/mixin/command'
 
   klass = Class.new(::RVM::Shell::AbstractWrapper) do
-    include Chef::Mixin::Command
 
     attr_accessor :current
 

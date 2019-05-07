@@ -19,7 +19,7 @@
 # limitations under the License.
 #
 
-    
+
 class Chef
   module RVM
     module ShellHelpers
@@ -68,11 +68,16 @@ class Chef
         cmd = ["source #{find_profile_to_source(user_dir)}",
           "rvm_ruby_string='#{str}'", "__rvm_ruby_string",
           "echo $rvm_ruby_string"].join(" && ")
-        pid, stdin, stdout, stderr = popen4('bash', shell_params(user, user_dir))
-        stdin.puts(cmd)
-        stdin.close
+        result = ""
+        Open3.popen2(shell_environment(user, user_dir), 'bash') do |stdin, stdout, status_thread|
+          stdin.puts(cmd)
+          stdin.close
+          result = stdout.read.split('\n').first.chomp
+          raise "Command Failed"  unless status_thread.value.success?
+        end
+        #stdin.puts(cmd)
+        #stdin.close
 
-        result = stdout.read.split('\n').first.chomp
         if result =~ /^-/   # if the result has a leading dash, value is bogus
           Chef::Log.warn("Could not determine canonical RVM string for: #{str} " +
                          "(#{user || 'system'})")
@@ -84,14 +89,11 @@ class Chef
         end
       end
 
-      def self.shell_params(user, user_dir)
+      def self.shell_environment(user, user_dir)
         if user
           {
-            :user => user,
-            :environment => {
-              'USER' => user,
-              'HOME' => user_dir
-            }
+            'USER' => user,
+            'HOME' => user_dir
           }
         else
           Hash.new

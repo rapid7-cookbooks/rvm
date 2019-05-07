@@ -69,7 +69,7 @@ default['rvm']['rvm_gem_options'] = "--no-rdoc --no-ri"
 default['rvm']['install_rubies']      = "true"
 default['rvm']['user_install_rubies'] = "true"
 
-case platform
+case node['platform']
 when "redhat","centos","fedora","scientific","amazon"
   node.normal['rvm']['install_pkgs']   = %w{sed grep tar gzip bzip2 bash curl git}
   default['rvm']['user_home_root']  = '/home'

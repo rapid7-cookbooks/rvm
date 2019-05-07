@@ -36,7 +36,7 @@ Array(node['rvm']['user_installs']).each do |rvm_user|
 
   execute "RVM gpg key for #{rvm_user['user']}" do
     command "`which gpg2 || which gpg` --homedir #{rvm_prefix}/.gnupg --keyserver hkp://keys.gnupg.net --recv-keys #{node['rvm']['gpg_key']}"
-    user rvm_user['user']
+    user jenkins
     only_if { not node['rvm']['gpg_key'].empty? if node['rvm']['gpg_key'] }
     not_if "`which gpg2 || which gpg` --homedir #{rvm_prefix}/.gnupg --list-keys #{node['rvm']['gpg_key']}", :user => rvm_user['user']
   end

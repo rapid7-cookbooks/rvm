@@ -19,7 +19,8 @@
 # limitations under the License.
 #
 
-
+require 'chef/mixin/command'
+    
 class Chef
   module RVM
     module ShellHelpers
@@ -28,6 +29,7 @@ class Chef
 
     class StringCache
       class << self
+        include Chef::Mixin::Command
         include Chef::RVM::ShellHelpers
       end
 
